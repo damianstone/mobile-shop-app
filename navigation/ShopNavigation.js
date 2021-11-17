@@ -1,17 +1,17 @@
-import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
-import { Platform } from 'react-native';
+import { createStackNavigator } from 'react-navigation-stack'
+import { createAppContainer } from 'react-navigation'
+import { Platform } from 'react-native'
 
-import Colors from '../constants/Colors';
-import ProductsOverview from '../screens/shop/ProductsOverview';
-import ProductDetail from '../screens/shop/ProductDetail';
-import Orders from '../screens/shop/Orders';
-import Cart from '../screens/shop/Cart';
-
+import Colors from '../constants/Colors'
+import ProductsOverview from '../screens/shop/ProductsOverview'
+import ProductDetail from '../screens/shop/ProductDetail'
+import Orders from '../screens/shop/Orders'
+import Cart from '../screens/shop/Cart'
 
 const ProductsNavigator = createStackNavigator(
   {
     ProductsOverview: ProductsOverview,
+    ProductDetail: ProductDetail,
   },
   {
     defaultNavigationOptions: {
@@ -19,6 +19,6 @@ const ProductsNavigator = createStackNavigator(
       headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary,
     },
   }
-);
+)
 
-export default createAppContainer(ProductsNavigator);
+export default createAppContainer(ProductsNavigator)

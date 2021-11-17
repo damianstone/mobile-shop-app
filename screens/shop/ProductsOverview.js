@@ -1,12 +1,13 @@
-import React from 'react';
-import { FlatList } from 'react-native';
-import { useSelector } from 'react-redux';
-import ProductItem from '../../components/shop/ProductItem';
+import React from 'react'
+import { FlatList } from 'react-native'
+import { useSelector } from 'react-redux'
+import ProductItem from '../../components/shop/ProductItem'
 
 //LIST OF ALL THE PRODUCTS THAT USER CAN ORDER
 const ProductsOverview = (props) => {
   // get the products from redux
-  const products = useSelector((state) => state.products.availableProducts);
+  const products = useSelector((state) => state.products.availableProducts)
+
   return (
     <FlatList
       data={products}
@@ -16,16 +17,21 @@ const ProductsOverview = (props) => {
           image={itemData.item.imageUrl}
           title={itemData.item.title}
           price={itemData.item.price}
-          onViewDetail={() => {}}
+          onViewDetail={() =>
+            props.navigation.navigate('ProductDetail', {
+              productId: itemData.item.id,
+              productTitle: itemData.item.title,
+            })
+          }
           onAddToCart={() => {}}
         />
       )}
     />
-  );
-};
+  )
+}
 
 ProductsOverview.navigationOptions = {
   headerTitle: 'All Products',
-};
+}
 
-export default ProductsOverview;
+export default ProductsOverview
