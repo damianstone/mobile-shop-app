@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import ProductItem from '../../components/shop/ProductItem';
 
@@ -29,5 +29,3 @@ ProductsOverview.navigationOptions = {
 };
 
 export default ProductsOverview;
-
-const styles = StyleSheet.create({});
