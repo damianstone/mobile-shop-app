@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import * as Font from 'expo-font';
-import { AppLoading } from 'expo-app-loading';
+import AppLoading from 'expo-app-loading';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import productReducer from './store/reducers/product';
+import cartReducer from './store/reducers/cart';
 import ShopNavigation from './navigation/ShopNavigation';
 
 const rootReducer = combineReducers({
   products: productReducer,
+  cart: cartReducer
 })
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, composeWithDevTools()) // remove compose before deploy app
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -32,7 +35,7 @@ export default function App() {
         }}
         onError={() => console.log(err)}
       />
-    );
+    ); 
   }
   return (
     <Provider store={store}>

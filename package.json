@@ -7,9 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject",
-    "prettier": "prettier 'src/**/*.js'",
-    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
+    "eject": "expo eject"
   },
   "prettier": {
     "jsxBracketSameLine": true,
@@ -18,21 +16,21 @@
   },
   "dependencies": {
     "expo": "~43.0.0",
+    "expo-app-loading": "~1.2.1",
+    "expo-font": "~10.0.3",
     "expo-status-bar": "~1.1.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-native": "0.64.2",
+    "react-native": "0.64.3",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-reanimated": "~2.2.0",
-    "react-native-safe-area-context": "^3.3.2",
+    "react-native-safe-area-context": "3.3.2",
     "react-native-web": "0.17.1",
     "react-navigation": "^4.4.4",
     "react-navigation-header-buttons": "^9.0.1",
     "react-navigation-stack": "^2.10.4",
     "react-redux": "^7.2.6",
-    "redux": "^4.1.2",
-    "expo-app-loading": "~1.2.1",
-    "expo-font": "~10.0.3"
+    "redux": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -44,7 +42,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "redux-devtools-extension": "^2.13.9"
   },
   "private": true
 }
