@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Colors from '../../constants/Colors'
 import CartItem from '../../components/shop/CartItem'
 import * as cartActions from '../../store/actions/cartActions'
+import * as ordersActions from '../../store/actions/orderActions'
 
 const Cart = (props) => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount)
@@ -37,6 +38,9 @@ const Cart = (props) => {
           title="Order Now"
           //IF NO ITEMS SO THE BUTTONS WILL BE OPAQUE
           disabled={cartItems.length === 0}
+          onPress={() => {
+            dispatch(ordersActions.addOrder(cartItems, cartTotalAmount))
+          }}
         />
       </View>
       <FlatList
@@ -55,6 +59,10 @@ const Cart = (props) => {
       />
     </View>
   )
+}
+
+Cart.navigationOptions = {
+  headerTitle: 'Your Cart',
 }
 
 export default Cart

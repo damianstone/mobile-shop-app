@@ -18,5 +18,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "react-native"],
-  "rules": {}
+  "rules": {
+    "semi": [2, "always"]
+  }
 }
