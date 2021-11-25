@@ -1,16 +1,16 @@
-import React from 'react'
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native'
-import { useSelector, useDispatch } from 'react-redux'
-import Colors from '../../constants/Colors'
-import CartItem from '../../components/shop/CartItem'
-import * as cartActions from '../../store/actions/cartActions'
-import * as ordersActions from '../../store/actions/orderActions'
+import React from 'react';
+import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import Colors from '../../constants/Colors';
+import CartItem from '../../components/shop/CartItem';
+import * as cartActions from '../../store/actions/cartActions';
+import * as ordersActions from '../../store/actions/orderActions';
 
 const Cart = (props) => {
-  const cartTotalAmount = useSelector((state) => state.cart.totalAmount)
+  const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
   // TRANSFORM CART ITEMS INTO AN ARRAY
   const cartItems = useSelector((state) => {
-    const transform = []
+    const transform = [];
     for (const key in state.cart.items) {
       transform.push({
         productId: key,
@@ -18,14 +18,14 @@ const Cart = (props) => {
         productPrice: state.cart.items[key].productPrice,
         quantity: state.cart.items[key].quantity,
         sum: state.cart.items[key].sum,
-      })
+      });
     }
-    return transform.sort((a, b) => (a.productId > b.productId ? 1 : -1))
+    return transform.sort((a, b) => (a.productId > b.productId ? 1 : -1));
     // sort para que cuando se vayan eliminando o entrando los productos elegidos
     // en toCart, estos se lleguen y se borren en orden
-  })
+  });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.screen}>
@@ -39,7 +39,7 @@ const Cart = (props) => {
           //IF NO ITEMS SO THE BUTTONS WILL BE OPAQUE
           disabled={cartItems.length === 0}
           onPress={() => {
-            dispatch(ordersActions.addOrder(cartItems, cartTotalAmount))
+            dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
           }}
         />
       </View>
@@ -51,21 +51,22 @@ const Cart = (props) => {
             quantity={itemData.item.quantity}
             title={itemData.item.productTitle}
             amount={itemData.item.sum}
+            deletable={true}
             onRemove={() => {
-              dispatch(cartActions.removeFromCart(itemData.item.productId))
+              dispatch(cartActions.removeFromCart(itemData.item.productId));
             }}
           />
         )}
       />
     </View>
-  )
-}
+  );
+};
 
 Cart.navigationOptions = {
   headerTitle: 'Your Cart',
-}
+};
 
-export default Cart
+export default Cart;
 
 const styles = StyleSheet.create({
   screen: {
@@ -92,4 +93,4 @@ const styles = StyleSheet.create({
   amount: {
     color: Colors.primary,
   },
-})
+});

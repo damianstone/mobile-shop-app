@@ -1,15 +1,17 @@
-import React from 'react'
-import { createStackNavigator } from 'react-navigation-stack'
-import { createAppContainer } from 'react-navigation'
-import { createDrawerNavigator } from 'react-navigation-drawer'
-import { Platform } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import React from 'react';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-import Colors from '../constants/Colors'
-import ProductsOverview from '../screens/shop/ProductsOverview'
-import ProductDetail from '../screens/shop/ProductDetail'
-import Orders from '../screens/shop/Orders'
-import Cart from '../screens/shop/Cart'
+import Colors from '../constants/Colors';
+import ProductsOverview from '../screens/shop/ProductsOverview';
+import ProductDetail from '../screens/shop/ProductDetail';
+import Orders from '../screens/shop/Orders';
+import Cart from '../screens/shop/Cart';
+import UserProducts from '../screens/user/UserProducts';
+import EditProduct from '../screens/user/EditProduct';
 
 const defaultNavOptions = {
   backgroundColor: Platform.OS === 'android' ? Colors.primary : ' ',
@@ -20,7 +22,7 @@ const defaultNavOptions = {
   headerBackTitleStyle: {
     fontFamily: 'open-sans',
   },
-}
+};
 
 const ProductsNavigator = createStackNavigator(
   {
@@ -40,7 +42,7 @@ const ProductsNavigator = createStackNavigator(
     },
     defaultNavigationOptions: defaultNavOptions,
   }
-)
+);
 
 const OrdersNavigator = createStackNavigator(
   {
@@ -58,18 +60,37 @@ const OrdersNavigator = createStackNavigator(
     },
     defaultNavigationOptions: defaultNavOptions,
   }
-)
+);
+
+const AdminNavigator = createStackNavigator(
+  {
+    UserProducts: UserProducts,
+  },
+  {
+    navigationOptions: {
+      drawerIcon: (drawerConfig) => (
+        <Ionicons
+          name={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+          size={23}
+          color={drawerConfig.tintColor}
+        />
+      ),
+    },
+    defaultNavigationOptions: defaultNavOptions,
+  }
+);
 
 const shopNavigator = createDrawerNavigator(
   {
     Products: ProductsNavigator,
     Orders: OrdersNavigator,
+    Admin: AdminNavigator,
   },
   {
     contentOptions: {
       activeTintColor: Colors.primary,
     },
   }
-)
+);
 
-export default createAppContainer(shopNavigator)
+export default createAppContainer(shopNavigator);

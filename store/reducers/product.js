@@ -1,10 +1,24 @@
 import PRODUCTS from '../../data/dummy-data';
+import { DELETE_PRODUCT } from '../actions/productActions';
 
 const initialState = {
-    availableProducts: PRODUCTS,
-    userProducts: PRODUCTS.filter(prod => prod.ownerId === 'ui'),
+  availableProducts: PRODUCTS,
+  userProducts: PRODUCTS.filter((prod) => prod.ownerId === 'u1'),
 };
 
 export default (state = initialState, action) => {
-    return state;
-}
+  switch (action.type) {
+    // delete a selected product from the availableProducts array
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        userProducts: state.userProducts.filter(
+          (product) => product.id !== action.pid
+        ),
+        availableProducts: state.availableProducts.filter(
+          (product) => product.id !== action.pid
+        ),
+      };
+  }
+  return state;
+};
