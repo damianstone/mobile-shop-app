@@ -26,12 +26,13 @@ const Cart = (props) => {
   });
 
   const dispatch = useDispatch();
+  const amount = Math.round(cartTotalAmount.toFixed(2) * 100) / 100 // math to not get - numbers
 
   return (
     <View style={styles.screen}>
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
-          Toal:<Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
+          Toal:<Text style={styles.amount}>${amount}</Text>
         </Text>
         <Button
           color={Colors.accent}
@@ -56,7 +57,7 @@ const Cart = (props) => {
               dispatch(cartActions.removeFromCart(itemData.item.productId));
             }}
           />
-        )}
+        )} 
       />
     </View>
   );

@@ -31,7 +31,7 @@ const ProductItem = (props) => {
             </View>
             <View style={styles.actions}>
               {props.children}
-            </View>
+            </View> 
           </View>
         </TouchableCmp>
       </View>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   details: {
     alignItems: 'center',
-    height: '15%',
+    height: '17%',
     padding: 10,
     fontFamily: 'open-sans',
   },
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '25%',
+    height: '23%',
     paddingHorizontal: 20,
   },
 });
