@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
 })
 
 const store = createStore(rootReducer, composeWithDevTools()) // remove compose before deploy app
-
+ 
 const fetchFonts = () => {
   return Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
