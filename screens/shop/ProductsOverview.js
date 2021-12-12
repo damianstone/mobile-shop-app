@@ -58,7 +58,7 @@ const ProductsOverview = (props) => {
 ProductsOverview.navigationOptions = (navData) => {
   return {
     headerTitle: 'All Products',
-    headerLeft: (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButtom}>
         <Item
           title="Menu"
@@ -69,7 +69,7 @@ ProductsOverview.navigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
-    headerRight: (
+    headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButtom}>
         <Item
           title="Cart"

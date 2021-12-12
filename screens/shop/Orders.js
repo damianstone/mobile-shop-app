@@ -25,7 +25,7 @@ const Orders = (props) => {
 Orders.navigationOptions = (navData) => {
   return {
     headerTitle: 'Your Orders',
-    headerLeft: (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButtom}>
         <Item
           title="Menu"
