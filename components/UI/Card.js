@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Colors from '../../constants/Colors';
 
 const Card = (props) => {
   return (
@@ -17,6 +18,6 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: Colors.card,
   },
 });

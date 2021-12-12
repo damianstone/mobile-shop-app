@@ -39,14 +39,14 @@ const UserProducts = (props) => {
             editProductHandler(itemData.item.id);
           }}>
           <Button
-            color={Colors.primary}
+            color={Colors.icon}
             title="Edit"
             onPress={() => {
               editProductHandler(itemData.item.id);
             }}
           />
           <Button
-            color={Colors.primary}
+            color={Colors.icon}
             title="Delete"
             onPress={() => {
               deleteHandler(itemData.item.id);

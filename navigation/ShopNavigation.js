@@ -14,14 +14,19 @@ import UserProducts from '../screens/user/UserProducts';
 import EditProduct from '../screens/user/EditProduct';
 
 const defaultNavOptions = {
-  backgroundColor: Platform.OS === 'android' ? Colors.primary : ' ',
   headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary,
+  headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? Colors.headerAndroid : '',
+  },
   headerTitleStyle: {
     fontFamily: 'open-sans-bold',
   },
   headerBackTitleStyle: {
     fontFamily: 'open-sans',
   },
+  cardStyle: {
+    backgroundColor: Colors.bg, // change the backgroud of screens
+  }
 };
 
 const ProductsNavigator = createStackNavigator(
@@ -89,7 +94,7 @@ const shopNavigator = createDrawerNavigator(
   },
   {
     contentOptions: {
-      activeTintColor: Colors.primary,
+      activeTintColor: Colors.icon,
     },
   }
 );

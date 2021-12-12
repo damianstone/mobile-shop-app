@@ -1,4 +1,10 @@
 export default {
-    primary: '#C2185B',
-    accent: '#FFC107',
+    bg: '#EBECF3',
+    headerAndroid: '#FF7903',
+    cart: '',
+    icon: '#FF7903',
+    card: '#F6F6F7',
+    primary: '#040508',
+    accent: '#00A427',
+    //'#FFC107',
 }

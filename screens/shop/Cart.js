@@ -36,7 +36,7 @@ const Cart = (props) => {
           Toal:<Text style={styles.amount}>${amount}</Text>
         </Text>
         <Button
-          color={Colors.accent}
+          color={Colors.icon}
           title="Order Now"
           //IF NO ITEMS SO THE BUTTONS WILL BE OPAQUE
           disabled={cartItems.length === 0}

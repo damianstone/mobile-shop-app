@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
   totalAmount: {
     fontFamily: 'open-sans-bold',
     fontSize: 16,
+    color: Colors.icon,
   },
   date: {
     fontSize: 13,

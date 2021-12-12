@@ -36,14 +36,14 @@ const ProductsOverview = (props) => {
             dispatch(cartActions.addToCart(itemData.item));
           }}>
           <Button
-            color={Colors.primary}
+            color={Colors.icon}
             title="View Details"
             onPress={() => {
               selectItemHandler(itemData.item.id, itemData.item.title);
             }}
           />
           <Button
-            color={Colors.primary}
+            color={Colors.icon}
             title="To Cart"
             onPress={() => {
               dispatch(cartActions.addToCart(itemData.item));
