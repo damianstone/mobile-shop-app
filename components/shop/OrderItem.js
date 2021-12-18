@@ -5,7 +5,7 @@ import CartItem from './CartItem';
 import Card from '../UI/Card';
 
 const OrderItem = (props) => {
-  const [showDetails, setShowDetails] = useState(false);
+  const [showDetails, setShowDetails] = useState(false); 
 
   return (
     <Card style={styles.orderItem}>

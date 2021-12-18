@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useReducer } from 'react';
+import React, { useState, useEffect, useCallback, useReducer } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,12 +6,14 @@ import {
   Platform,
   Alert,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButtom from '../../components/UI/HeaderButton';
 import { useSelector, useDispatch } from 'react-redux';
 import * as productActions from '../../store/actions/productActions';
 import Input from '../../components/UI/Input';
+import Colors from '../../constants/Colors';
 
 const FORM_UPDATE = 'FORM_UPDATE';
 
@@ -40,6 +42,9 @@ const formReducer = (state, action) => {
 };
 
 const EditProduct = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
   // get the IDs using params and navigation
   const productId = props.navigation.getParam('productId');
   // get the state of the product from the store
@@ -68,7 +73,13 @@ const EditProduct = (props) => {
 
   const dispatch = useDispatch();
 
-  const submitHandler = useCallback(() => {
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An error occurred!', error, [{ text: 'Okay' }]);
+    }
+  }, [error]);
+
+  const submitHandler = useCallback(async () => {
     // check input validations before submit
     if (!formState.formIsValid) {
       Alert.alert('Wrong input!', 'Please check the errors in the form', [
@@ -76,30 +87,37 @@ const EditProduct = (props) => {
       ]);
       return;
     }
-    // dispatch depending on whether we are editing or adding a product
-    if (editedProduct) {
-      // if the state of edit mode true
-      // this change the state on the store
-      dispatch(
-        productActions.updateProduct(
-          productId,
-          formState.inputValues.title,
-          formState.inputValues.description,
-          formState.inputValues.imageUrl
-        )
-      );
-    } else {
-      dispatch(
+    setError(null);
+    setIsLoading(true);
+    try {
+      // dispatch depending on whether we are editing or adding a product
+      if (editedProduct) {
+        // if the state of edit mode true
         // this change the state on the store
-        productActions.createProduct(
-          formState.inputValues.title,
-          formState.inputValues.description,
-          formState.inputValues.imageUrl,
-          +formState.inputValues.price // +price is a conversion to number
-        )
-      );
+        await dispatch(
+          productActions.updateProduct(
+            productId,
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl
+          )
+        );
+      } else {
+        await dispatch(
+          // this change the state on the store
+          productActions.createProduct(
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl,
+            +formState.inputValues.price // +price is a conversion to number
+          )
+        );
+      }
+      props.navigation.goBack(); // go back to the previous screen after save
+    } catch (err) {
+      setError(err.message);
     }
-    props.navigation.goBack(); // go back to the previous screen after save
+    setIsLoading(false);
   }, [dispatch, productId, formState]);
 
   useEffect(() => {
@@ -118,6 +136,14 @@ const EditProduct = (props) => {
     },
     [dispatchFormState]
   );
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.icons} />
+      </View>
+    );
+  }
 
   return (
     <KeyboardAvoidingView // to avoid the keyboard to cover the input
@@ -211,5 +237,10 @@ export default EditProduct;
 const styles = StyleSheet.create({
   form: {
     margin: 20,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
