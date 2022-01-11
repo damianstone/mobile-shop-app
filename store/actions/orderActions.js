@@ -44,11 +44,15 @@ export const fetchOrders = () => {
 
 // ADD ORDER AND STORE IT IN FIREBASE
 export const addOrder = (cartItems, totalAmount) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // get the token from the state
+    const token = getState().auth.token;
+    // query for URL
+    const auth = `?auth=${token}`;
     const date = new Date();
     const response = await fetch(
       // connecting to firebase
-      'https://shop-app-19d81-default-rtdb.firebaseio.com/orders/u1.json',
+      `https://shop-app-19d81-default-rtdb.firebaseio.com/orders/u1.json${auth}`,
       {
         method: 'POST',
         headers: {

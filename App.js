@@ -9,12 +9,14 @@ import ReduxThunk from 'redux-thunk';
 import productReducer from './store/reducers/product';
 import cartReducer from './store/reducers/cart';
 import orderReducer from './store/reducers/order';
+import authReducer from './store/reducers/auth';
 import ShopNavigation from './navigation/ShopNavigation';
 
 const rootReducer = combineReducers({
   products: productReducer,
   cart: cartReducer,
   orders: orderReducer,
+  auth: authReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk)); // remove compose before deploy app
@@ -25,7 +27,7 @@ const fetchFonts = () => {
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   });
 };
-//ERROR
+
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 

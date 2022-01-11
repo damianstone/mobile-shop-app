@@ -14,3 +14,4 @@ export const removeFromCart = (productId) => {
     pid: productId,
   }
 }
+

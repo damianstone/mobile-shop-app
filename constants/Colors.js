@@ -6,5 +6,6 @@ export default {
     card: '#F6F6F7',
     primary: '#040508',
     accent: '#00A427',
+    red: '#ef3a7b',
     //'#FFC107',
 }

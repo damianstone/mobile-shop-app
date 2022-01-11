@@ -48,9 +48,13 @@ export const fetchProducts = () => {
 
 // DELETE PRODUCTS
 export const deleteProduct = (productId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // get the token from the state
+    const token = getState().auth.token;
+    // query for URL
+    const auth = `?auth=${token}`;
     const response = await fetch(
-      `https://shop-app-19d81-default-rtdb.firebaseio.com/products/${productId}.json`,
+      `https://shop-app-19d81-default-rtdb.firebaseio.com/products/${productId}.json${auth}`,
       {
         method: 'DELETE',
       }
@@ -69,11 +73,13 @@ export const deleteProduct = (productId) => {
 
 // CREATE PRODUCTS AND SEND TO FIREBASE
 export const createProduct = (title, description, imageUrl, price) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    const auth = `?auth=${token}`;
     // any async code you want
     const response = await fetch(
       // connecting to firebase
-      'https://shop-app-19d81-default-rtdb.firebaseio.com/products.json',
+      `https://shop-app-19d81-default-rtdb.firebaseio.com/products.json${auth}`,
       {
         method: 'POST',
         headers: {
@@ -105,10 +111,17 @@ export const createProduct = (title, description, imageUrl, price) => {
 
 // UPDATE-EDIT PRODUCTS
 export const updateProduct = (id, title, description, imageUrl) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // GETSTATE => get acces to the redux state, access to the current state
+    console.log(getState());
+    // get access to edit products when the user is logged in
+    // adding the token to the URL makes possible to edit the product for the user
+    // remember the configuration (rules) in the firebase console to "write" and "read"
+    const token = getState().auth.token; // get the token of the user from the redux state
+    const auth = `?auth=${token}`; // store token to add it in the url
     const response = await fetch(
       // go to a particular product
-      `https://shop-app-19d81-default-rtdb.firebaseio.com/products/${id}.json`,
+      `https://shop-app-19d81-default-rtdb.firebaseio.com/products/${id}.json${auth}`,
       {
         method: 'PATCH', // PATCH is for updating a part of the data
         headers: {

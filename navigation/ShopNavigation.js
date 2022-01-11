@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,6 +12,7 @@ import Orders from '../screens/shop/Orders';
 import Cart from '../screens/shop/Cart';
 import UserProducts from '../screens/user/UserProducts';
 import EditProduct from '../screens/user/EditProduct';
+import AuthScreen from '../screens/user/AuthScreen';
 
 const defaultNavOptions = {
   headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary,
@@ -26,7 +27,7 @@ const defaultNavOptions = {
   },
   cardStyle: {
     backgroundColor: Colors.bg, // change the backgroud of screens
-  }
+  },
 };
 
 const ProductsNavigator = createStackNavigator(
@@ -99,4 +100,18 @@ const shopNavigator = createDrawerNavigator(
   }
 );
 
-export default createAppContainer(shopNavigator);
+const AuthNavigator = createStackNavigator(
+  {
+    Auth: AuthScreen,
+  },
+  {
+    defaultNavigationOptions: defaultNavOptions,
+  }
+);
+
+const MainNavigator = createSwitchNavigator({
+  Auth: AuthNavigator,
+  Shop: shopNavigator,
+});
+
+export default createAppContainer(MainNavigator);
