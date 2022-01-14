@@ -8,9 +8,10 @@ import Colors from '../../constants/Colors';
 import * as productActions from '../../store/actions/productActions';
 
 const UserProducts = (props) => {
+  // get state with useSelector 
   const userProducts = useSelector((state) => state.products.userProducts);
   const dispatch = useDispatch();
-
+  
   const editProductHandler = (id) => {
     props.navigation.navigate('EditProduct', { productId: id });
   };
@@ -25,6 +26,14 @@ const UserProducts = (props) => {
       },
     ]);
   };
+
+  if (userProducts.length === 0) {
+    return (
+      <View style={styles.screen}>
+        <Text style={styles.noProducts}>No products found. Maybe start adding some!</Text>
+      </View>
+    );
+  }
 
   return (
     <FlatList
@@ -58,6 +67,7 @@ const UserProducts = (props) => {
   );
 };
 
+//NAVIGATION
 UserProducts.navigationOptions = (navData) => {
   return {
     headerTitle: 'User Products',
@@ -88,4 +98,14 @@ UserProducts.navigationOptions = (navData) => {
 
 export default UserProducts;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noProducts: {
+    fontSize: 20,
+    color: Colors.icon,
+  }
+});

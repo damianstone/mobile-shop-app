@@ -7,5 +7,6 @@ export default {
     primary: '#040508',
     accent: '#00A427',
     red: '#ef3a7b',
+    white: 'white',
     //'#FFC107',
 }

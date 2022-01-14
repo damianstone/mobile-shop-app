@@ -7,7 +7,9 @@ export const SET_PRODUCTS = 'SET_PRODUCTS';
 
 // FETCH PRODUCTS FROM FIREBASE
 export const fetchProducts = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // fetch products behind the user id
+    const userId = getState().auth.userId; // get the userId from the state
     try {
       // any async code you want
       const response = await fetch(
@@ -26,7 +28,7 @@ export const fetchProducts = () => {
         loadedProducts.push(
           new Product(
             key,
-            'u1',
+            resData[key].ownerId,
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
@@ -38,6 +40,9 @@ export const fetchProducts = () => {
       dispatch({
         type: SET_PRODUCTS,
         products: loadedProducts,
+        userProducts: loadedProducts.filter(
+          (product) => product.ownerId === userId
+        ), // only fetch products of the user in the "my products" section
       });
     } catch (err) {
       // catch errors
@@ -75,6 +80,8 @@ export const deleteProduct = (productId) => {
 export const createProduct = (title, description, imageUrl, price) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
+    // create product assiciated by the user ID
+    const userId = getState().auth.userId; // get the userId from the state
     const auth = `?auth=${token}`;
     // any async code you want
     const response = await fetch(
@@ -91,6 +98,7 @@ export const createProduct = (title, description, imageUrl, price) => {
           description,
           imageUrl,
           price,
+          ownerId: userId,
         }),
       }
     );
@@ -104,6 +112,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         description,
         imageUrl,
         price,
+        ownerId: userId,
       },
     });
   };
@@ -115,7 +124,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
     // GETSTATE => get acces to the redux state, access to the current state
     console.log(getState());
     // get access to edit products when the user is logged in
-    // adding the token to the URL makes possible to edit the product for the user
+    // adding the token to the URL makes possible for the user to edit and dispatch certain actions
     // remember the configuration (rules) in the firebase console to "write" and "read"
     const token = getState().auth.token; // get the token of the user from the redux state
     const auth = `?auth=${token}`; // store token to add it in the url

@@ -5,11 +5,13 @@ export const SET_ORDERS = 'SET_ORDERS';
 
 // FETCH ORDERS
 export const fetchOrders = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    // fetch orders behind the user id
+    const userId = getState().auth.userId; // get the userId from the state
     try {
       // any async code you want
       const response = await fetch(
-        'https://shop-app-19d81-default-rtdb.firebaseio.com/orders/u1.json'
+        `https://shop-app-19d81-default-rtdb.firebaseio.com/orders/${userId}.json`
       );
 
       if (!response.ok) {
@@ -45,14 +47,14 @@ export const fetchOrders = () => {
 // ADD ORDER AND STORE IT IN FIREBASE
 export const addOrder = (cartItems, totalAmount) => {
   return async (dispatch, getState) => {
-    // get the token from the state
-    const token = getState().auth.token;
-    // query for URL
-    const auth = `?auth=${token}`;
+    const token = getState().auth.token; // get the token from the state
+    // user can add order backend by their ID
+    const userId = getState().auth.userId; // get the userId from the state
+    const auth = `?auth=${token}`; // query for URL
     const date = new Date();
     const response = await fetch(
       // connecting to firebase
-      `https://shop-app-19d81-default-rtdb.firebaseio.com/orders/u1.json${auth}`,
+      `https://shop-app-19d81-default-rtdb.firebaseio.com/orders/${userId}.json${auth}`,
       {
         method: 'POST',
         headers: {

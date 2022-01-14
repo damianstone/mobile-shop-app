@@ -35,6 +35,14 @@ const Orders = (props) => {
     );
   }
 
+  if (orders.length === 0) {
+    return (
+      <View style={styles.screen}>
+        <Text style={styles.noProducts}>No orders found. Maybe start adding some!</Text>
+      </View>
+    );
+  }
+
   return (
     <FlatList
       data={orders}
@@ -50,6 +58,7 @@ const Orders = (props) => {
   );
 };
 
+// NAVIGATION 
 Orders.navigationOptions = (navData) => {
   return {
     headerTitle: 'Your Orders',
@@ -75,4 +84,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noProducts: {
+    fontSize: 20,
+    color: Colors.icon,
+  }
 });
