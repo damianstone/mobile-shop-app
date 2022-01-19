@@ -103,7 +103,10 @@ const AuthNavigator = createStackNavigator(
     Auth: AuthScreen,
   },
   {
-    defaultNavigationOptions: defaultNavOptions,
+    defaultNavigationOptions: {
+      ...defaultNavOptions,
+      headerTintColor: Colors.icon,
+    },
   }
 );
 
@@ -131,7 +134,7 @@ const shopNavigator = createDrawerNavigator(
               color={Colors.white}
               onPress={() => {
                 dispatch(authActions.logout());
-                props.navigation.navigate('Auth');
+                //props.navigation.navigate('Auth');
               }}
             />
           </View>
@@ -162,4 +165,3 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
-
