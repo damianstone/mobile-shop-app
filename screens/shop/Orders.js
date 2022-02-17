@@ -59,7 +59,7 @@ const Orders = (props) => {
 };
 
 // NAVIGATION 
-Orders.navigationOptions = (navData) => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: 'Your Orders',
     headerLeft: () => (

@@ -25,7 +25,8 @@ const StartupScreen = (props) => {
 
       // if there is no user data
       if (!userData) {
-        props.navigation.navigate('Auth');
+        //props.navigation.navigate('Auth');
+        dispatch(authActions.setDidTryAuth());
         return;
       }
 
@@ -35,7 +36,8 @@ const StartupScreen = (props) => {
 
       // if the token is expired
       if (expirationDate <= new Date() || !token || !userId) {
-        props.navigation.navigate('Auth');
+        //props.navigation.navigate('Auth');
+        dispatch(authActions.setDidTryAuth());
         return;
       }
 
@@ -43,7 +45,7 @@ const StartupScreen = (props) => {
       const expirationTime = expirationDate.getTime() - new Date().getTime();
 
       // if the token is valid and the user login then go to the home screen
-      props.navigation.navigate('Shop');
+     // props.navigation.navigate('Shop');
       dispatch(authActions.authenticate(userId, token, expirationTime));
     };
     tryLogin();

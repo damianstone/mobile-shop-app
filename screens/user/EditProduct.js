@@ -45,8 +45,11 @@ const EditProduct = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  // get the IDs using params and navigation
-  const productId = props.navigation.getParam('productId');
+  // get the IDs using params and navigation -- not working with react nav 5x
+  //const productId = props.navigation.getParam('productId');
+
+  const productId = props.route.params ? props.route.params.productId : null; // react nav 5x get param
+
   // get the state of the product from the store
   const editedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId)
@@ -121,7 +124,21 @@ const EditProduct = (props) => {
   }, [dispatch, productId, formState]);
 
   useEffect(() => {
-    props.navigation.setParams({ submit: submitHandler });
+    props.navigation.setOptions({
+      // instead of setParams for react nav 5x
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButtom}>
+          <Item
+            title="Save"
+            iconName={
+              Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
+            }
+            onPress={submitHandler}
+          />
+        </HeaderButtons>
+      ),
+    });
+    //setParams({ submit: submitHandler }); React nav < 5x
   }, [submitHandler]);
 
   const inputChangeHandler = useCallback(
@@ -211,24 +228,16 @@ const EditProduct = (props) => {
   );
 };
 
-EditProduct.navigationOptions = (navData) => {
-  const submitFunction = navData.navigation.getParam('submit');
+export const screenOptions = (navData) => {
+  // there is no getParam in react nav 5x
+  //const submitFunction = navData.navigation.getParam('submit');
+  const submitFunction = navData.route.params
+    ? navData.route.params.submit
+    : null;
+  const routeParams = navData.route.params ? navData.route.params : {}; // thats because params could be undefined
 
   return {
-    headerTitle: navData.navigation.getParam('productId')
-      ? 'Edit Product'
-      : 'Add Product',
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButtom}>
-        <Item
-          title="Save"
-          iconName={
-            Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
-          }
-          onPress={submitFunction}
-        />
-      </HeaderButtons>
-    ),
+    headerTitle: routeParams.productId ? 'Edit Product' : 'Add Product',
   };
 };
 

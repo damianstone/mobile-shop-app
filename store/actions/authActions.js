@@ -2,10 +2,17 @@ import { AsyncStorage } from 'react-native'; // automatically login when reload
 //import {} from '@react-native-community/async-storage';
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
+export const SET_DID_TRY_AUTH = 'SET_DID_TRY_AUTH';
 
 let timer;
 
 const KEY = 'AIzaSyAeTJYg-SmUKrM0Alclkyc6abG2xS-lPeE';
+
+export const setDidTryAuth = () => {
+  return {
+    type: SET_DID_TRY_AUTH,
+  };
+};
 
 // RESUSABLE AUNTENTICATE DISPATCH
 export const authenticate = (userId, token, expiryTime) => {

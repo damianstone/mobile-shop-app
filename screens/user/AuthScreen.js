@@ -91,7 +91,7 @@ const AuthScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      props.navigation.navigate('Shop'); // go to home if login or signup is successful
+      //props.navigation.navigate('Shop'); // not necessary with navigation 5x
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -169,7 +169,7 @@ const AuthScreen = (props) => {
   );
 };
 
-AuthScreen.navigationOptions = {
+export const screenOptions = {
   headerTitle: 'Authenticate',
 };
 
