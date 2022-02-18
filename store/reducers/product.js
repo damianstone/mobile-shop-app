@@ -18,11 +18,12 @@ export default (state = initialState, action) => {
       return {
         availableProducts: action.products,
         userProducts: action.userProducts, // userProducts => filtered in dispatch
-      }
+      };
     case CREATE_PRODUCT:
       const newProduct = new Product(
         action.productData.id,
         action.productData.ownerId,
+        action.productData.pushToken,
         action.productData.title,
         action.productData.imageUrl,
         action.productData.description,
@@ -41,6 +42,7 @@ export default (state = initialState, action) => {
       const updatedProduct = new Product(
         action.pid,
         state.userProducts[productIndex].ownerId, // maintain the old item
+        state.userProducts[productIndex].pushToken,
         action.productData.title,
         action.productData.imageUrl,
         action.productData.description,

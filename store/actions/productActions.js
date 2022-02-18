@@ -1,9 +1,69 @@
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
+
 import Product from '../../models/product';
 
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
+
+// CREATE PRODUCTS AND SEND TO FIREBASE
+export const createProduct = (title, description, imageUrl, price) => {
+  return async (dispatch, getState) => {
+    // MANAGE NOTIFICATIONS AND PERMISSIONS
+    // to send the user push not to firebase database 
+    let pushToken;
+    let statusObj = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (statusObj.status !== 'granted') {
+      statusObj = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    }
+    if (statusObj.status !== 'granted') {
+      pushToken = null;
+    } else {
+      pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+    }
+
+    const token = getState().auth.token;
+    // create product assiciated by the user ID
+    const userId = getState().auth.userId; // get the userId from the state
+    const auth = `?auth=${token}`;
+    // any async code you want
+    const response = await fetch(
+      // connecting to firebase
+      `https://shop-app-19d81-default-rtdb.firebaseio.com/products.json${auth}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          // transform to JS object to JSON
+          title,
+          description,
+          imageUrl,
+          price,
+          ownerId: userId,
+          ownerPushToken: pushToken
+        }),
+      }
+    );
+    const resData = await response.json();
+    // thats will be dispatch once response be done
+    dispatch({
+      type: CREATE_PRODUCT,
+      productData: {
+        id: resData.name,
+        title,
+        description,
+        imageUrl,
+        price,
+        ownerId: userId,
+        pushToken: pushToken
+      },
+    });
+  };
+};
 
 // FETCH PRODUCTS FROM FIREBASE
 export const fetchProducts = () => {
@@ -29,6 +89,7 @@ export const fetchProducts = () => {
           new Product(
             key,
             resData[key].ownerId,
+            resData[key].ownerPushToken,
             resData[key].title,
             resData[key].imageUrl,
             resData[key].description,
@@ -72,48 +133,6 @@ export const deleteProduct = (productId) => {
     dispatch({
       type: DELETE_PRODUCT,
       pid: productId,
-    });
-  };
-};
-
-// CREATE PRODUCTS AND SEND TO FIREBASE
-export const createProduct = (title, description, imageUrl, price) => {
-  return async (dispatch, getState) => {
-    const token = getState().auth.token;
-    // create product assiciated by the user ID
-    const userId = getState().auth.userId; // get the userId from the state
-    const auth = `?auth=${token}`;
-    // any async code you want
-    const response = await fetch(
-      // connecting to firebase
-      `https://shop-app-19d81-default-rtdb.firebaseio.com/products.json${auth}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          // transform to JS object to JSON
-          title,
-          description,
-          imageUrl,
-          price,
-          ownerId: userId,
-        }),
-      }
-    );
-    const resData = await response.json();
-    // thats will be dispatch once response be done
-    dispatch({
-      type: CREATE_PRODUCT,
-      productData: {
-        id: resData.name,
-        title,
-        description,
-        imageUrl,
-        price,
-        ownerId: userId,
-      },
     });
   };
 };

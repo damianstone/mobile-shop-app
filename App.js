@@ -5,12 +5,21 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
+import * as Notifications from 'expo-notifications';
 
 import productReducer from './store/reducers/product';
 import cartReducer from './store/reducers/cart';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
 import AppNavigator from './navigation/AppNavigator';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => {
+    return {
+      shouldShowAlert: true, // able the local not
+    };
+  },
+});
 
 const rootReducer = combineReducers({
   products: productReducer,
